@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // ignore: must_be_immutable
 class Home extends StatelessWidget {
@@ -13,6 +14,17 @@ class Home extends StatelessWidget {
           child: Obx(() => Text("count: $count")),
         ),
         floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.email), onPressed: () => count++),
+            child: const Icon(Icons.email),
+            onPressed: () async {
+              count++;
+
+              try {
+                //
+                throw Exception('一个dart异常同步');
+              } catch (exception, stackTrace) {
+                await Sentry.captureException(exception,
+                    stackTrace: stackTrace);
+              }
+            }),
       );
 }
