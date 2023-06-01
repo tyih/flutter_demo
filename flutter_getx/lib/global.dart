@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_getx/utils/loading.dart';
+import 'package:flutter_getx/utils/storage.dart';
 import 'package:get/get.dart';
 
 class Global {
@@ -8,6 +10,10 @@ class Global {
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     setSystemUi();
+
+    // 工具类
+    await Storage().init();
+    Loading.init();
   }
 
   static void setSystemUi() {
